@@ -1,0 +1,13 @@
+/vendor/
+/node_modules/
+/var/cache/*
+!/var/cache/.gitkeep
+/var/log/*
+!/var/log/.gitkeep
+/var/sessions/
+.env.local
+.env.local.php
+.env.*.local
+.git/
+.idea/
+.vscode/
