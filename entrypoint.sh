@@ -7,4 +7,4 @@ php bin/console doctrine:migrations:migrate --no-interaction
 php-fpm -D
 
 # I-start ang Nginx sa foreground aron magpabilin buhi ang container
-nginx -g "daemon off;"
+#nginx -g "daemon off;"
