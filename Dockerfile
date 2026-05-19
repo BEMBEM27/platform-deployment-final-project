@@ -38,4 +38,4 @@ RUN chown -R www-data:www-data /var/www/html \
 EXPOSE 8080
 
 # Sigurohon nga modagan si nginx gamit ang husto nga user account
-CMD ["npm", "start"]
+CMD php-fpm -D && nginx -g "daemon off;"
