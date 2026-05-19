@@ -26,7 +26,7 @@ COPY . /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # I-run ang composer install para sa dependencies sa vendor folder
-RUN composer install --no-interaction --prefer-dist --no-progress
+RUN if [ -f composer.json ]; then composer install --no-interaction --prefer-dist --no-progress; fi
 
 # Hatagan og husto nga permission ang www-data user para sa tanang logs ug folders
 RUN chown -R www-data:www-data /var/www/html \
