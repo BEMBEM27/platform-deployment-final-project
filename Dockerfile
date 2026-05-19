@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.2-fpm
 
 # Install system dependencies, PHP extensions, and Nginx
 ENV DEBIAN_FRONTEND=noninteractive
