@@ -17,7 +17,7 @@ RUN apt-get update \
 # I-copy ang imong nginx.conf sa saktong folder sa container
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Usba ang Working Directory ngadto sa gipangita ni Nginx
+# Usba ang Working Directory ngadto sa saktong standard folder
 WORKDIR /var/www/html
 
 # I-copy ang tibuok mong project files padulong sa /var/www/html
@@ -29,13 +29,14 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install dependencies gamit ang saktong path
 RUN if [ -f /var/www/html/composer.json ]; then composer install --no-interaction --prefer-dist --no-progress; fi
 
-# Hatagan og saktong permissions ang www-data user
+# Hatagan og saktong permissions ang www-data user ug folders para sa Nginx
 RUN chown -R www-data:www-data /var/www/html \
     && chown -R www-data:www-data /var/lib/nginx \
-    && chown -R www-data:www-data /var/log/nginx
+    && chown -R www-data:www-data /var/log/nginx \
+    && mkdir -p /var/cache/nginx /var/run \
+    && chown -R www-data:www-data /var/cache/nginx /var/run
 
 EXPOSE 8080
 
-# Siguroha nga executeable ang imong entrypoint sa bag-ong path
-RUN chmod +x /var/www/html/entrypoint.sh
-CMD ["sh", "/var/www/html/entrypoint.sh"]
+# KANI NA LANG: Padaganon ang PHP-FPM sa background, ug i-foreground si Nginx para dili mo-crash ang container
+CMD php-fpm -D && nginx -g "daemon off;"
