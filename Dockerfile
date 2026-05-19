@@ -38,3 +38,4 @@ EXPOSE 8080
 
 # Siguroha nga executeable ang imong entrypoint sa bag-ong path
 RUN chmod +x /var/www/html/entrypoint.sh
+CMD ["sh", "/var/www/html/entrypoint.sh"]
