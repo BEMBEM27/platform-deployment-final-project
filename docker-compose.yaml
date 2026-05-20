@@ -1,30 +1,56 @@
-version: '3.8'
-
 services:
-  web:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: platform_app
     ports:
-      - "8080:80"
+      - "8000:80"
     volumes:
-      - .:/var/www/html
+      - ./src:/app/src
+      - ./templates:/app/templates
+      - ./public:/app/public
+      - ./var:/app/var
     environment:
+      DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}?serverVersion=8.0.32&charset=utf8mb4"
       APP_ENV: dev
-      APP_DEBUG: 1
-      DATABASE_URL: mysql://root:root@db:3306/symfony_db?serverVersion=8.0
+      APP_DEBUG: "1"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks:
+      - platform-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost/" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   db:
     image: mysql:8.0
+    container_name: platform_db
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: symfony_db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3310:3306"
     volumes:
-      - db-data:/var/lib/mysql
+      - platform-db-data:/var/lib/mysql
+    networks:
+      - platform-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
 volumes:
-  db-data:
+  platform-db-data:
+
+networks:
+  platform-network:
+    driver: bridge

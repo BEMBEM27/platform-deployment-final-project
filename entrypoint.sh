@@ -1,10 +1,14 @@
-#!/bin/sh
+#!/bin/bash
+set -e
 
-# Run database migrations
-php bin/console doctrine:migrations:migrate --no-interaction
+echo "Starting PHP-FPM..."
+php-fpm -F &
+PHP_PID=$!
 
-# Start PHP-FPM in background
-php-fpm -D
+echo "Waiting for PHP-FPM to start..."
+sleep 2
 
-# I-start ang Nginx sa foreground aron magpabilin buhi ang container
+echo "Starting Nginx..."
 nginx -g "daemon off;"
+
+wait $PHP_PID
