@@ -12,8 +12,7 @@ RUN docker-php-ext-install pdo pdo_mysql zip
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-WORKDIR /var/www/html
-
+WORKDIR /var/www/html/platform-deployment-final-project
 COPY . /var/www/html
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
