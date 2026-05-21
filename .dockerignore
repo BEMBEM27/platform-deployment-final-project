@@ -1,13 +1,48 @@
-/vendor/
-/node_modules/
-/var/cache/*
-!/var/cache/.gitkeep
-/var/log/*
-!/var/log/.gitkeep
-/var/sessions/
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Symfony cache and logs
+var/cache/
+var/log/
+
+# Vendor (rebuilt during Docker build)
+vendor/
+
+# Node modules
+node_modules/
+
+# Environment files (use Railway env vars instead)
 .env.local
-.env.local.php
-.env.*.local
-.git/
+.env.test
+.env.test.local
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+docs/
+
+# Docker files (not needed inside image)
+Dockerfile
+docker-compose.yaml
+docker-compose.*.yaml
+.dockerignore
+
+# IDE/Editor files
 .idea/
 .vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Test files
+tests/
+phpunit.xml
+phpunit.xml.dist
+
+# CI/CD
+.github/
+.travis.yml
