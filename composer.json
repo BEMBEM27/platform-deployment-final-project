@@ -1,0 +1,10 @@
+{
+    "require": {
+        "symfony/framework-bundle": "^7.4",
+        "doctrine/orm": "^3.6",
+        "doctrine/doctrine-bundle": "^2.18",
+        "twig/twig": "^3.26",
+        "symfony/twig-bundle": "^7.4",
+        "symfony/console": "^7.4"
+    }
+}
