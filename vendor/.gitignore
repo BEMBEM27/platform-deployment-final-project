@@ -1,0 +1,25 @@
+# Dependencies
+/vendor/
+
+# Symfony specific
+/.phpunit.result.cache
+/.php-cs-fixer.cache
+/.php-cs-fixer.php
+/var/*
+!/var/cache/
+!/var/log/
+/public/bundles/
+/public/js/
+/public/build/
+/public/hot
+
+# Environment
+.env
+.env.local
+.env.local.php
+.env.*.local
+
+# IDEs
+.idea/
+.vscode/
+.DS_Store
