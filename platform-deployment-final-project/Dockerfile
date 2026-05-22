@@ -26,6 +26,7 @@ COPY . .
 # 6. I-install ang PHP dependencies (optimized para sa production)
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
+RUN php bin/console doctrine:schema:update --force --env=prod
 # 7. I-set ang sakto nga permissions para sa web server
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
